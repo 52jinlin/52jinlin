@@ -1,0 +1,275 @@
+1.全部馆藏，附近图书，附近图书
+接口路径	http://+设置的服务器地址+:+端口+/jinlin/allbooks.do?app&longitude="
+ + longitude+ "&latitude=" + latitude+"&username="
+ + username+ "&password=" + pwd+"&type=" +type;
+接口方法	Public string Books()
+传入参数	用户名：username
+密码：pwd
+经度：longitude
+纬度：latitude
+类型：type(全部馆藏，附近图书，附近图书)：必传参数
+Ps：这些参数除type都不是必须传入的，其中附近图书需经纬度参数。我的图书需要
+传入用户名，密码。
+返回值/实体	{
+	"ret": 0,
+	"msg": "",
+	"list": [
+	{
+     "id": "45454545565",
+	"title": "工业人的未来",
+	"author": "彼得.德鲁克",
+	"country": "美国",
+	"catagory": "社会经典学",
+	"createtime": "2014-10-01 12:00:00",
+    "distance": "1000",
+	"price": "150"，
+     "share": "15",
+    “Rent”:”100”
+    “longest”:”30”
+    “introduce”:”这是这本书的图书简介”
+	},
+	{
+    "id": "45454545566",
+	"title": "公司概念",
+	"author": "彼得.德鲁克",
+	"country": "美国",
+	"catagory": "社会经典学",
+	"createtime": "2014-09-01 12:00:00",
+    "distance": "150",
+	"price": "160"，
+"share": "8",
+    “Rent”:”100”
+    “longest”:”30”
+    “introduce”:”这是这本书的图书简介”
+	}
+	]
+	}
+返回值说明	
+实体 result
+序号	字段	含义	类型	描述
+1.	id	每条的id	String	每条
+2.	title	标题	String	书的标题
+3.	author	作者	String	书的作者
+4.	country	国家	String	书的国家
+5.	catagory	所属类型	String	书的所属类型
+6.	createtime	时间	String	著作时间
+7.	price	价格	String	图书的具体价格
+8.	distance	距离	String	书本和用户的距离
+9.	share	分享	String	分享次数
+10.	rent	租价	String	租价
+11.	introduce	简介	String	图书的简介
+12.	longest	最长租期	String	图书的最长租期,单位：天
+
+
+
+业务逻辑	用户打开应用后，启动登录页面，登录后，加载全部馆藏，附近图书，我的图书图书信息。
+根据传入不同参数加载不同数据。图书简介的数据也在这个接口里面。
+2.登录
+接口路径	http://+设置的服务器地址+:+端口+/jinlin/loginController.do?app
+&userName=" + username + "&password=" + pwd;
+接口方法	Public string Login()
+传入参数	用户名：username
+密码：pwd
+返回值/实体	{"errorCode":1,"errorMessage":"成功","uid":"001",”name”:
+“科斯”,”account”:”kesi”,”Pwd”:”...”}
+
+返回值说明	
+实体 result
+序号	字段	含义	类型	描述
+1.	errorCode		Int	1：成功  
+2：账户不存在
+3：账户已禁用 
+4：密码不正确
+2.	errorMessage		String	错误提示信息
+3.	uid	系统编号	String	
+4.	name	用户名	String	
+5.	account	账号	String	
+6.	Pwd	密码	String	
+
+
+
+业务逻辑	用户打开应用后，启动登录页面，验证成功后需保存用户名、密码信息。
+3.注册：用户区位选择
+接口路径	http://+设置的服务器地址+:+端口+/jinlin/registerController.do?app
+&longitude=" + longitude+ "&latitude=" + latitude;
+接口方法	Public string Register()
+传入参数	经度：longitude
+纬度：latitude
+返回值/实体	{
+	"ret": 0,
+	"msg": "",
+	"nearbylist": [
+	{
+     "id": "306",
+	"name": "祈福新村",
+"description": "广州市番禺区祈福新村"
+	},
+	{
+    "id": "309",
+	"name": "华南新村",
+"description": "广州市番禺区华南新村"
+
+	}
+	]
+"mostlist": [
+	{
+     "id": "306",
+	"name": "祈福新村",
+"description": "广州市番禺区祈福新村"
+
+	},
+	{
+    "id": "309",
+	"name": "华南新村",
+"description": "广州市番禺区华南新村"
+
+	}
+	]
+
+	}
+返回值说明	
+实体 nearbylist ：附近社区
+序号	字段	含义	类型	描述
+1.	nearbyid	条目id	String	每个条目id
+2.	nearbyname	名称	String	社区具体名称
+3.	description	描述	String	社区的具体描述
+
+
+实体 mostlist  ：最多用户社区
+序号	字段	含义	类型	描述
+1.	mostid	条目id	String	每个条目id
+2.	mostname	名称	String	社区具体名称
+3.	description	描述	String	社区的具体描述
+
+
+业务逻辑	用户注册选择社区
+
+4.注册：用户区位选择，查询
+接口路径	http://+设置的服务器地址+:+端口+/jinlin/queryCommunity.do?app
+&para=" +para ;
+接口方法	Public string queryCommunity()
+传入参数	查询参数：para
+返回值/实体	{
+	"ret": 0,
+	"msg": "",
+	"list": [
+	{
+     "id": "306",
+	"name": "祈福新村",
+    "description": "广州市番禺区祈福新村"
+	}
+	]
+
+	}
+返回值说明	
+实体 list 
+序号	字段	含义	类型	描述
+1.	id	条目id	String	社区id
+2.	name	名称	String	社区具体名称
+3.	description	描述	String	社区的具体描述
+
+
+业务逻辑	用户注册选择社区，查询社区
+
+
+5.注册，手机验证
+接口路径	http://+设置的服务器地址+:+端口+/jinlin/PhoneRegister.do?app
+&phonenumber=" phonenumber;
+接口方法	Public string PhoneRegister()
+传入参数	手机号码：phonenumber
+返回值/实体	{"errorCode":1,"errorMessage":"成功",}
+
+返回值说明	
+实体 result
+序号	字段	含义	类型	描述
+1.	errorCode		Int	1：手机号码可以注册 
+2：手机号码已注册
+2.	errorMessage		String	错误提示信息
+
+
+业务逻辑	用户注册，验证手机号
+
+6.注册
+接口路径	http://+设置的服务器地址+:+端口+/jinlin/Register.do?app
+&description=" description+"&phonenumber=" phonenumber+"&password=" password;
+接口方法	Public string Register()
+传入参数	社区位置：description
+手机号码：phonenumber
+用户密码：password
+返回值/实体	{"errorCode":1,"errorMessage":"成功",}
+
+返回值说明	
+实体 result
+序号	字段	含义	类型	描述
+1.	errorCode		Int	1：成功  
+2：失败
+2.	errorMessage		String	错误提示信息
+
+
+业务逻辑	用户注册
+
+7.分享
+接口路径	http://+设置的服务器地址+:+端口+/jinlin/ShareBook.do?app
+&username=" username+"&bookid=" bookid;
+接口方法	Public string ShareBook()
+传入参数	用户名：username
+图书id：bookid
+
+返回值/实体	{"errorCode":1,"errorMessage":"成功",}
+
+返回值说明	
+实体 result
+序号	字段	含义	类型	描述
+1.	errorCode		Int	1：成功  
+2：失败
+2.	errorMessage		String	错误提示信息
+
+
+业务逻辑	用户分享图书
+
+8.收藏图书
+接口路径	http://+设置的服务器地址+:+端口+/jinlin/Borrow.do?app
+&username=" username+"&bookid=" bookid;
+接口方法	Public string Borrow()
+传入参数	用户名：username
+图书id：bookid
+
+返回值/实体	{"errorCode":1,"errorMessage":"成功",}
+
+返回值说明	
+实体 result
+序号	字段	含义	类型	描述
+1.	errorCode		Int	1：成功  
+2：失败
+2.	errorMessage		String	错误提示信息
+
+
+业务逻辑	用户收藏图书
+
+
+
+9.借阅结算
+接口路径	http://+设置的服务器地址+:+端口+/jinlin/allbooks.do?app&bookid="
+ + bookid+ "&borrowdays=" + borrowdays+"&connecttype="
+ + connecttype;
+接口方法	Public string Books()
+传入参数	图书id：bookid
+预计借阅天数：borrowdays
+交接方式：connecttype
+****
+返回值/实体	{"errorCode":1,"errorMessage":"成功",}
+
+返回值说明	
+实体 result
+序号	字段	含义	类型	描述
+1.	errorCode		Int	1：成功  
+2：失败
+2.	errorMessage		String	错误提示信息
+
+
+业务逻辑	借阅结算。支付成功接口数据，是否是借阅结算后返回？
+
+
+
+
+
